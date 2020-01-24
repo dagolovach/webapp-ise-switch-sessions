@@ -1,5 +1,5 @@
 credentials = {
-    'username': ['iementor3'],
-    'password': ['gb4qzNdrry@f0C'],
-    'secret': ['gb4qzNdrry@f0C'],
+    'username': ['admin'],
+    'password': ['admin@f0C'],
+    'secret': ['admin@f0C'],
 }
