@@ -25,7 +25,7 @@ import netmiko
 import pprint
 import sys
 from mac_vendor_lookup import MacLookup
-from __local import credentials
+from local import credentials
 
 
 def try_to_connect_ssh(current_ip_address):
@@ -99,9 +99,8 @@ def main(current_ip_address):
 
 if __name__ == "__main__":
     start_time = time.time()
-    if len(sys.argv) < 1:
-        raise SyntaxError("Insufficient arguments.")
-    if len(sys.argv) == 1:
+
+    if len(sys.argv) not 1:
         main(sys.argv[1])
     else:
         raise SyntaxError("Insufficient arguments.")
