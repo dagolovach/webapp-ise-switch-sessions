@@ -25,7 +25,7 @@ import netmiko
 import pprint
 import sys
 from mac_vendor_lookup import MacLookup
-from local_settings import credentials
+from __local import credentials
 
 
 def try_to_connect_ssh(current_ip_address):
