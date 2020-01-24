@@ -99,8 +99,9 @@ def main(current_ip_address):
 
 if __name__ == "__main__":
     start_time = time.time()
+    print(sys.argv)
+    if len(sys.argv) == 2:
 
-    if len(sys.argv) not 1:
         main(sys.argv[1])
     else:
         raise SyntaxError("Insufficient arguments.")
