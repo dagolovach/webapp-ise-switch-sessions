@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
 
 """
-get into the switch
-show failed access-sessions and method + mac address + IP address + name
+A simple script to collect information about access-session on the switch.
+- login to the switch
+- collect all mac addresses from access-sessions
+- check access-session for each mac address
+- if there is FAIL in the dACL - collect info about this session:
+    - interface
+    - mac_address
+    - ip_address
+    - user_name
+    - method (mab|dot1x)
+    - vendor (for mab)
 """
 
 credentials = {
@@ -19,6 +28,7 @@ import re
 import paramiko
 import netmiko
 import pprint
+import sys
 from mac_vendor_lookup import MacLookup
 
 
@@ -61,10 +71,7 @@ class Device:
         for each in self.mac_addresses:
             session_details = self.connection.send_command("sho access-session mac " + each + " details")
             if 'FAIL' in session_details:
-                # interface = re.findall(r'Interface: (.*)', session_details)
                 mac_address = re.findall(r'[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}', session_details)
-                # ip_address = re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', session_details)
-                # user_name = re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', session_details)
                 method = re.findall(r'(\w{3,5})\s+Authc Success', session_details)
                 dict_session_details = {}
                 dict_session_details['interface'] = re.findall(r'Interface: (.*)', session_details)[0]
@@ -89,12 +96,18 @@ def main(current_ip_address):
     device.collect_active_sessions()
     device.collect_active_sessions_details()
     device.close_connection()
-    pprint.PrettyPrinter(depth=4).pprint(dict_result)
+    pprint.PrettyPrinter().pprint(dict_result)
     with open('devices-result.csv', 'w', newline='') as f:
-        pprint.PrettyPrinter(depth=4, stream=f).pprint(dict_result)
+        pprint.PrettyPrinter(stream=f).pprint(dict_result)
 
 
 if __name__ == "__main__":
     start_time = time.time()
-    main('10.18.1.250')
+    if len(sys.argv) < 1:
+        raise SyntaxError("Insufficient arguments.")
+    if len(sys.argv) == 1:
+        main(sys.argv[1])
+    else:
+        raise SyntaxError("Insufficient arguments.")
+    #main('10.18.1.250')
     print(time.time() - start_time)
