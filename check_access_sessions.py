@@ -14,11 +14,6 @@ A simple script to collect information about access-session on the switch.
     - vendor (for mab)
 """
 
-credentials = {
-    'username': ['iementor3'],
-    'password': ['gb4qzNdrry@f0C'],
-    'secret': ['gb4qzNdrry@f0C'],
-}
 
 dict_result = {}
 
@@ -30,6 +25,7 @@ import netmiko
 import pprint
 import sys
 from mac_vendor_lookup import MacLookup
+from local_settings import credentials
 
 
 def try_to_connect_ssh(current_ip_address):
