@@ -40,7 +40,8 @@ def try_to_connect_ssh(current_ip_address):
             connection.enable()
             return connection
         except paramiko.AuthenticationException:
-            continue
+            print('Auth failed')
+            return
         except:
             print('Failed')
             return
@@ -66,14 +67,19 @@ class Device:
     def collect_active_sessions_details(self):
         for each in self.mac_addresses:
             session_details = self.connection.send_command("sho access-session mac " + each + " details")
-            if 'FAIL' in session_details:
+            if 'FAIL' in session_details or 'Unauthorized' in session_details:
                 mac_address = re.findall(r'[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}', session_details)
-                method = re.findall(r'(\w{3,5})\s+Authc Success', session_details)
+                ip_address = re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', session_details)
+                method = re.findall(r'(\w{3,5})\s+Authc\s.*', session_details)
+                status = re.findall('Status:  (.*)', session_details)
                 dict_session_details = {}
+                dict_session_details['status'] = status[0]
                 dict_session_details['interface'] = re.findall(r'Interface: (.*)', session_details)[0]
                 dict_session_details['mac_address'] = mac_address[0]
-                dict_session_details['ip_address'] = re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', session_details)[
-                    0]
+                if ip_address:
+                    dict_session_details['ip_address'] = ip_address[0]
+                else:
+                    dict_session_details['ip_address'] = 'unknown'
                 dict_session_details['user_name'] = re.findall(r'User-Name:\s+(.*)', session_details)[0]
                 dict_session_details['method'] = method[0]
                 if method[0] == 'mab':
@@ -99,9 +105,8 @@ def main(current_ip_address):
 
 if __name__ == "__main__":
     start_time = time.time()
-    print(sys.argv)
-    if len(sys.argv) == 2:
 
+    if len(sys.argv) == 2:
         main(sys.argv[1])
     else:
         raise SyntaxError("Insufficient arguments.")
