@@ -14,7 +14,7 @@ A simple script to collect information about access-session on the switch.
 ## Technologies
 * Python3
 * ISE
-* Cisco IOS
+* Cisco IOS switch
 
 ## Setup
 * python check_access_sessions.py <IP_ADDRESS>
