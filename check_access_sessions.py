@@ -69,7 +69,13 @@ class Device:
 
     def collect_active_sessions_details(self):
         """
-        collect details for each session. If there is FAIL in the output - collect
+        collect details for each session. If there is FAIL in the output - collect:
+        - interfcace
+        - mac-address
+        - method
+        - status
+        - user_name
+        - vendor
         :return:dict_result
          '<MAC-ADDRESS>': {'interface': 'GigabitEthernetX/X',
                     'ip_address': '<IP_ADDRESS>',
@@ -113,7 +119,7 @@ def main(current_ip_address):
     device.collect_active_sessions_details()
     device.close_connection()
     pprint.PrettyPrinter().pprint(dict_result)
-    with open('devices-result.csv', 'w', newline='') as f:
+    with open('result.json', 'w', newline='') as f:
         pprint.PrettyPrinter(stream=f).pprint(dict_result)
 
 if __name__ == "__main__":
