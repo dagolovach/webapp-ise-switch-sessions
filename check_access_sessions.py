@@ -14,7 +14,6 @@ A simple script to collect information about access-session on the switch.
     - vendor (for mab)
 """
 
-
 dict_result = {}
 
 # Imports
@@ -26,7 +25,6 @@ import pprint
 import sys
 from mac_vendor_lookup import MacLookup
 from local import credentials
-
 
 def try_to_connect_ssh(current_ip_address):
     for count in range(0, len(credentials['username'])):
@@ -46,7 +44,6 @@ def try_to_connect_ssh(current_ip_address):
             print('Failed')
             return
 
-
 class Device:
 
     def __init__(self, current_ip_address):
@@ -59,14 +56,32 @@ class Device:
         self.connection.disconnect()
 
     def collect_active_sessions(self):
+        """
+        collect all mac addressess if active sessions and store mac address in the list
+        :return:
+        self.session_count - count of all sessions on the switch
+        self.mac_addresses - all mac addresses of access-sessions (authentication sessions)
+        """
         self.connection.send_command("term len 0")
-        active_sessions = self.connection.send_command("show access-session")
+        active_sessions = self.connection.send_command("show authentication sessions")
         self.session_count = re.findall('Session count = (\d+)\n', active_sessions)
         self.mac_addresses = re.findall(r'[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}', active_sessions)
 
     def collect_active_sessions_details(self):
+        """
+        collect details for each session. If there is FAIL in the output - collect
+        :return:dict_result
+         '<MAC-ADDRESS>': {'interface': 'GigabitEthernetX/X',
+                    'ip_address': '<IP_ADDRESS>',
+                    'mac_address': '<MAC-ADDRESS>',
+                    'method': '<MAB/DOT1X>',
+                    'status': 'Authz Success',
+                    'user_name': 'AA-AA-AA-AA-AA-AA',
+                    'vendor': 'Cisco Systems, Inc'}}
+
+        """
         for each in self.mac_addresses:
-            session_details = self.connection.send_command("sho access-session mac " + each + " details")
+            session_details = self.connection.send_command("sho authentication sessions mac " + each)
             if 'FAIL' in session_details or 'Unauthorized' in session_details:
                 mac_address = re.findall(r'[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}', session_details)
                 ip_address = re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', session_details)
@@ -91,7 +106,6 @@ class Device:
             else:
                 continue
 
-
 def main(current_ip_address):
     device = Device(current_ip_address)
     device.init_connection_ssh()
@@ -102,7 +116,6 @@ def main(current_ip_address):
     with open('devices-result.csv', 'w', newline='') as f:
         pprint.PrettyPrinter(stream=f).pprint(dict_result)
 
-
 if __name__ == "__main__":
     start_time = time.time()
 
@@ -110,5 +123,8 @@ if __name__ == "__main__":
         main(sys.argv[1])
     else:
         raise SyntaxError("Insufficient arguments.")
-    #main('10.18.1.250')
+    #main('10.10.10.10')
     print(time.time() - start_time)
+
+
+
