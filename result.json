@@ -1,6 +1,6 @@
 {'b000.b4ba.24a0': {'interface': ' GigabitEthernetX/X',
                     'ip_address': '10.10.10.10',
-                    'mac_address': 'b000.b4ba.24a0',
+                    'mac_address': 'b000.b4ba.24a6',
                     'method': 'mab',
                     'status': 'Authz Success',
                     'user_name': 'B0-00-B4-BA-24-A0',
