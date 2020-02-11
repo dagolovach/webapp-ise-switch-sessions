@@ -125,11 +125,11 @@ def main(current_ip_address):
 if __name__ == "__main__":
     start_time = time.time()
 
-    if len(sys.argv) == 2:
-        main(sys.argv[1])
-    else:
-        raise SyntaxError("Insufficient arguments.")
-    #main('10.10.10.10')
+    #if len(sys.argv) == 2:
+    #    main(sys.argv[1])
+    #else:
+    #    raise SyntaxError("Insufficient arguments.")
+    main('10.10.10.10')
     print(time.time() - start_time)
 
 
