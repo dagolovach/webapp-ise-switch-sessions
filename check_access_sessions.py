@@ -63,7 +63,7 @@ class Device:
         self.mac_addresses - all mac addresses of access-sessions (authentication sessions)
         """
         self.connection.send_command("term len 0")
-        active_sessions = self.connection.send_command("show authentication sessions")
+        active_sessions = self.connection.send_command("show access-session")
         self.session_count = re.findall('Session count = (\d+)\n', active_sessions)
         self.mac_addresses = re.findall(r'[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}', active_sessions)
 
@@ -87,7 +87,7 @@ class Device:
 
         """
         for each in self.mac_addresses:
-            session_details = self.connection.send_command("sho authentication sessions mac " + each)
+            session_details = self.connection.send_command("sho access-session mac " + each + ' detail')
             if 'FAIL' in session_details or 'Unauthorized' in session_details:
                 mac_address = re.findall(r'[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}', session_details)
                 ip_address = re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', session_details)
@@ -113,6 +113,7 @@ class Device:
                 continue
 
 def main(current_ip_address):
+    start_time = time.time()
     device = Device(current_ip_address)
     device.init_connection_ssh()
     device.collect_active_sessions()
@@ -121,16 +122,15 @@ def main(current_ip_address):
     pprint.PrettyPrinter().pprint(dict_result)
     with open('result.json', 'w', newline='') as f:
         pprint.PrettyPrinter(stream=f).pprint(dict_result)
+    print(time.time() - start_time)
 
 if __name__ == "__main__":
-    start_time = time.time()
-
     #if len(sys.argv) == 2:
     #    main(sys.argv[1])
     #else:
     #    raise SyntaxError("Insufficient arguments.")
     main('10.10.10.10')
-    print(time.time() - start_time)
+
 
 
 
