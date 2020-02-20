@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css') }}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+    <title>Title</title>
+<head>
+
+
+</head>
+
+<body>
+        <div class="container-fluid pt-3">
+            <div class="row pt-5">
+                <div class="col"></div>
+                <div class="col">
+                    <form action="{{  url_for('main') }}" method="post">
+                        <button class="btn btn-primary">Main</button>
+                    </form>
+                </div>
+                <div class="col"></div>
+            </div>
+            <div class="row pt-5">
+
+                <div class="col">
+                    <table class="table table-bordered table-sm" width="80%">
+
+                  <tbody>
+                    <thead>
+                        <tr>
+                            <th scope="col">mac_address</th>
+                            <th scope="col">interface</th>
+                            <th scope="col">ip_address</th>
+                            <th scope="col">mac_address</th>
+                            <th scope="col">method</th>
+                            <th scope="col">status</th>
+                            <th scope="col">user_name</th>
+                            <th scope="col">vendor</th>
+                            <th scope="col">Add to ISE</th>
+
+                        </tr>
+                    </thead>
+                  {% for result in dict_result %}
+                    <tr>
+                        <td style="text-align: left">
+                            {{result}}
+                        </td>
+                        <td style="text-align: left">
+                            {{dict_result[result]['interface']}}
+                        </td>
+                        <td style="text-align: left">
+                            {{dict_result[result]['ip_address']}}
+                        </td>
+                        <td style="text-align: left">
+                            {{dict_result[result]['mac_address']}}
+                        </td>
+                        <td style="text-align: left">
+                            {{dict_result[result]['method']}}
+                        </td>
+                        <td style="text-align: left">
+                          {{dict_result[result]['status']}}
+                        </td>
+                        <td style="text-align: left">
+                          {{dict_result[result]['user_name']}}
+                        </td>
+                        <td style="text-align: left">
+                            {{dict_result[result]['vendor']}}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('search_ise', mac = dict_result[result]['mac_address'] ) }}">Add to ISE</a>
+                        </td>
+
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+                </div>
+
+            </div>
+            <div class="row pt-5">
+                <div class="col"></div>
+                <div class="col"><h4><a href="/static/result.json">Check result JSON file</a></h4></div>
+                <div class="col"></div>
+
+            </div>
+        </div>
+
+
+</body>
+</html>

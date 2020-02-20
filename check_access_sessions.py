@@ -14,8 +14,6 @@ A simple script to collect information about access-session on the switch.
     - vendor (for mab)
 """
 
-dict_result = {}
-
 # Imports
 import time
 import re
@@ -23,8 +21,10 @@ import paramiko
 import netmiko
 import pprint
 import sys
-from mac_vendor_lookup import MacLookup
+import time
 from local import credentials
+import requests
+
 
 def try_to_connect_ssh(current_ip_address):
     for count in range(0, len(credentials['username'])):
@@ -44,7 +44,10 @@ def try_to_connect_ssh(current_ip_address):
             print('Failed')
             return
 
+
 class Device:
+
+    dict_result = {}
 
     def __init__(self, current_ip_address):
         self.current_ip_address = current_ip_address
@@ -63,7 +66,7 @@ class Device:
         self.mac_addresses - all mac addresses of access-sessions (authentication sessions)
         """
         self.connection.send_command("term len 0")
-        active_sessions = self.connection.send_command("show access-session")
+        active_sessions = self.connection.send_command("show authentication sessions")
         self.session_count = re.findall('Session count = (\d+)\n', active_sessions)
         self.mac_addresses = re.findall(r'[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}', active_sessions)
 
@@ -87,7 +90,7 @@ class Device:
 
         """
         for each in self.mac_addresses:
-            session_details = self.connection.send_command("sho access-session mac " + each + ' detail')
+            session_details = self.connection.send_command("show authentication sessions mac " + each)
             if 'FAIL' in session_details or 'Unauthorized' in session_details:
                 mac_address = re.findall(r'[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}', session_details)
                 ip_address = re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', session_details)
@@ -104,13 +107,18 @@ class Device:
                 dict_session_details['user_name'] = re.findall(r'User-Name:\s+(.*)', session_details)[0]
                 dict_session_details['method'] = method[0]
                 if method[0] == 'mab':
-                    mac_string = ''.join([mac_address[0][i] for i in range(0, len(mac_address[0])) if mac_address[0][i] != '.'])
-                    dict_session_details['vendor'] = MacLookup().lookup(
-                        ':'.join(mac_string[i:i + 2] for i in range(0, 12, 2)))
+                    url = 'https://api.macvendors.com/' + mac_address[0]
+                    response = requests.get(url)
+                    dict_session_details['vendor'] = response.text
+                    time.sleep(1)
 
-                dict_result[each] = dict_session_details
+                Device.dict_result[each] = dict_session_details
             else:
                 continue
+
+    def get_result(self):
+        return Device.dict_result
+
 
 def main(current_ip_address):
     start_time = time.time()
@@ -118,19 +126,20 @@ def main(current_ip_address):
     device.init_connection_ssh()
     device.collect_active_sessions()
     device.collect_active_sessions_details()
+    dict_result = device.get_result()
     device.close_connection()
     pprint.PrettyPrinter().pprint(dict_result)
-    with open('result.json', 'w', newline='') as f:
+    with open('static/result.json', 'w', newline='') as f:
         pprint.PrettyPrinter(stream=f).pprint(dict_result)
     print(time.time() - start_time)
+    return dict_result
+
 
 if __name__ == "__main__":
+    dict_result = {}
     #if len(sys.argv) == 2:
     #    main(sys.argv[1])
     #else:
     #    raise SyntaxError("Insufficient arguments.")
-    main('10.8.1.5')
-
-
-
+    main('10.19.1.5')
 
