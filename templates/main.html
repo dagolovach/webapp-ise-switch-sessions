@@ -24,11 +24,27 @@
         <div class="container-fluid pt-3">
             <div class="row pt-5">
                 <div class="col"></div>
+                <div class="col"> <h3>Collect access-sessions information from the switch</h3></div>
+                <div class="col"></div>
+            </div>
+            <div class="row pt-5">
+                <div class="col"></div>
                 <div class="col">
                     <form action="{{  url_for('check') }}" method="post">
-                        <input name="ip_address" class="form-control" id="exampleFormControlTextarea5" rows="1" required></input>
+                        <input name="ip_address" class="form-control" id="exampleFormControlTextarea5" rows="1" placeholder="Enter switch IP Address" required>
                         <p></p>
-                        <button class="btn btn-primary">Submit</button>
+                        <button class="btn btn-primary">Submit IP address</button>
+                    </form>
+                </div>
+                <div class="col"></div>
+            </div>
+            <div class="row pt-5">
+                <div class="col"></div>
+                <div class="col">
+                    <form action="{{  url_for('search_endpoint') }}" method="post">
+                        <input name="mac" class="form-control" id="exampleFormControlTextarea5" rows="1" placeholder="Enter Endpoint MAC Address" required>
+                        <p></p>
+                        <button class="btn btn-primary">Submit MAC</button>
                     </form>
                 </div>
                 <div class="col"></div>

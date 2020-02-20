@@ -22,27 +22,27 @@ import netmiko
 import pprint
 import sys
 import time
-from local import credentials
+from local import switch_credentials
 import requests
 
 
 def try_to_connect_ssh(current_ip_address):
-    for count in range(0, len(credentials['username'])):
-        try:
-            connection = netmiko.ConnectHandler(device_type='cisco_ios_ssh',
-                                                ip=current_ip_address,
-                                                username=credentials['username'][count],
-                                                password=credentials['password'][count],
-                                                secret=credentials['secret'][count],
-                                                )
-            connection.enable()
-            return connection
-        except paramiko.AuthenticationException:
-            print('Auth failed')
-            return
-        except:
-            print('Failed')
-            return
+    try:
+        connection = netmiko.ConnectHandler(device_type='cisco_ios_ssh',
+                                            ip=current_ip_address,
+                                            username=switch_credentials['username'],
+                                            password=switch_credentials['password'],
+                                            secret=switch_credentials['secret'],
+                                            )
+        connection.enable()
+        return connection
+    except paramiko.AuthenticationException:
+        print('Auth failed')
+        return
+    except:
+        print('Failed')
+        return
+
 
 
 class Device:
@@ -66,7 +66,7 @@ class Device:
         self.mac_addresses - all mac addresses of access-sessions (authentication sessions)
         """
         self.connection.send_command("term len 0")
-        active_sessions = self.connection.send_command("show authentication sessions")
+        active_sessions = self.connection.send_command("show access-session")
         self.session_count = re.findall('Session count = (\d+)\n', active_sessions)
         self.mac_addresses = re.findall(r'[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}', active_sessions)
 
@@ -90,7 +90,7 @@ class Device:
 
         """
         for each in self.mac_addresses:
-            session_details = self.connection.send_command("show authentication sessions mac " + each)
+            session_details = self.connection.send_command("show access-session mac " + each + ' detail')
             if 'FAIL' in session_details or 'Unauthorized' in session_details:
                 mac_address = re.findall(r'[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}', session_details)
                 ip_address = re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', session_details)

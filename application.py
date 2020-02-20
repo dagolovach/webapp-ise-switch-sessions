@@ -17,17 +17,24 @@ def main():
     return render_template("main.html")
 
 
-@app.route("/check", methods=["POST"])
+@app.route("/check-result", methods=["POST"])
 def check():
     ip_address = request.form.get("ip_address")
     dict_result = check_access_sessions.main(ip_address)
     #return jsonify(dict_result)
-    return render_template("result.html", dict_result=dict_result)
+    return render_template("check-result.html", dict_result=dict_result)
 
-@app.route("/search/<mac>", methods=["GET", "POST"])
+@app.route("/mac/<mac>", methods=["GET", "POST"])
 def search_ise(mac):
+    endpoint_group_name = 'Unknown'
     ise_groups = ise_api.get_group_id()
-    return render_template("update-mac.html", mac=mac, ise_groups=ise_groups)
+    print(ise_groups)
+    endpoint_group_id = ise_api.get_endpoint_group_id(mac)
+    for group_id, group_name in ise_groups.items():  # for name, age in dictionary.iteritems():  (for Python 2.x)
+        if group_id == endpoint_group_id:
+            endpoint_group_name = group_name
+    return render_template("update-mac.html", mac=mac, endpoint_group_id=endpoint_group_name, ise_groups=ise_groups)
+
 
 @app.route("/update/<mac>", methods=["POST"])
 def update_ise(mac):
@@ -39,3 +46,15 @@ def update_ise(mac):
     else:
         update_result = False
     return render_template("update-result.html", result=update_result)
+
+
+@app.route("/endpoint", methods=["POST"])
+def search_endpoint():
+    mac = request.form.get("mac")
+    endpoint_group_name = 'Unknown'
+    ise_groups = ise_api.get_group_id()
+    endpoint_group_id = ise_api.get_endpoint_group_id(mac)
+    for group_id, group_name in ise_groups.items():  # for name, age in dictionary.iteritems():  (for Python 2.x)
+        if group_id == endpoint_group_id:
+            endpoint_group_name = group_name
+    return render_template("update-mac.html", mac=mac, endpoint_group_id=endpoint_group_name, ise_groups=ise_groups)

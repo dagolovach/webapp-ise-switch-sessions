@@ -12,26 +12,44 @@
         body {
             text-align: center;
         }
+        h4 span {
+          color: #007bff;
+        }
     </style>
     <title>Title</title>
 </head>
 <body>
         <div class="container-fluid pt-3">
+
+                <div class="row pt-5">
+                    <div class="col"></div>
+                    <div class="col">
+                        <form action="{{  url_for('main') }}" method="post">
+                            <button class="btn btn-outline-primary">Main</button>
+                        </form>
+                    </div>
+                    <div class="col"></div>
+                </div>
                 <dev class="row"></dev>
                 <dev class="row">
                     <dev class="col"></dev>
                     <dev class="col pt-5">
-                        <p>
-                            Do you want to update {{mac}} in the ISE?
-                            Please select the group:
 
+                        <h4> Do you want to update <span>{{mac}}</span> in the ISE?</h4>
+                        <p></p>
+                        <dev class="row"></dev>
+                        <h4>Current group: <span>{{ endpoint_group_id }}</span><h4>
+                            <dev class="row pt-5"></dev>
+                        <h5>Please select the ISE group:</h5>
+                            <dev class="row"></dev>
+                        <p></p>
                             <form action="{{ url_for('update_ise', mac=mac ) }}" method="post">
 
                                 <div class="form-group">
                                 <select class="form-control" name="ise_group_id">
 
-                                    {% for ise_group in ise_groups.keys() %}
-                                         <option value="{{ ise_groups[ise_group] }}"> {{ise_group}} </option>
+                                    {% for ise_group in ise_groups %}
+                                         <option value="{{ ise_group }}"> {{ise_groups[ise_group]}} </option>
                                     {% endfor %}
 
                                 </select>
@@ -43,8 +61,6 @@
 
                             </form>
 
-
-                        </p>
                     </dev>
                     <dev class="col"></dev>
 
