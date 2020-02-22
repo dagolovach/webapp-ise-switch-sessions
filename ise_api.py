@@ -15,8 +15,8 @@ headers = {
 }
 user = ise_credentials['username']
 password = ise_credentials['password']
-base_url = ise_credentials['base_url']
-
+#base_url = ise_credentials['base_url']
+base_url = 'https://3.45.48.12:9060/ers/config/'
 
 def get_group_id() -> dict:
     """
