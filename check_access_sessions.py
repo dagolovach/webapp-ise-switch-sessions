@@ -47,10 +47,9 @@ def try_to_connect_ssh(current_ip_address):
 
 class Device:
 
-    dict_result = {}
-
     def __init__(self, current_ip_address):
         self.current_ip_address = current_ip_address
+        self.dict_result = {}
 
     def init_connection_ssh(self):
         self.connection = try_to_connect_ssh(self.current_ip_address)
@@ -66,7 +65,7 @@ class Device:
         self.mac_addresses - all mac addresses of access-sessions (authentication sessions)
         """
         self.connection.send_command("term len 0")
-        active_sessions = self.connection.send_command("show access-session")
+        active_sessions = self.connection.send_command("show authentication sessions")
         self.session_count = re.findall('Session count = (\d+)\n', active_sessions)
         self.mac_addresses = re.findall(r'[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}', active_sessions)
 
@@ -89,8 +88,9 @@ class Device:
                     'vendor': 'Cisco Systems, Inc'}}
 
         """
+        dict_result = {}
         for each in self.mac_addresses:
-            session_details = self.connection.send_command("show access-session mac " + each + ' detail')
+            session_details = self.connection.send_command("show authentication sessions mac " + each)
             if 'FAIL' in session_details or 'Unauthorized' in session_details:
                 mac_address = re.findall(r'[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}', session_details)
                 ip_address = re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', session_details)
@@ -112,12 +112,12 @@ class Device:
                     dict_session_details['vendor'] = response.text
                     time.sleep(1)
 
-                Device.dict_result[each] = dict_session_details
+                self.dict_result[each] = dict_session_details
             else:
                 continue
 
     def get_result(self):
-        return Device.dict_result
+        return self.dict_result
 
 
 def main(current_ip_address):
@@ -141,5 +141,5 @@ if __name__ == "__main__":
     #    main(sys.argv[1])
     #else:
     #    raise SyntaxError("Insufficient arguments.")
-    main('10.19.1.5')
+    main('3.45.48.130')
 

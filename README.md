@@ -1,5 +1,7 @@
-# Switch Check Access Sessions
-A simple script to collect information about access-session on the switch.
+# WebApp to gather Access Sessions info and Set Endpoint Group in ISE
+
+This Flask Web Application allows to do the following:
+1. gather information about access-session on the switch.
 - login to the switch
 - collect all mac addresses from access-sessions
 - check access-session for each mac address
@@ -10,21 +12,50 @@ A simple script to collect information about access-session on the switch.
     - user_name
     - method (mab|dot1x)
     - vendor (for mab)
+2. Put endpoint into the specific Endpoint Group in ISE
 
-## Technologies
+<!-- TABLE OF CONTENTS -->
+## Table of Contents
+* [About the Project](#about-the-project)
+  * [Built With](#built-with)
+* [Getting Started](#getting-started)
+* [Usage](#usage)
+* [Roadmap](#roadmap)
+* [Contributing](#contributing)
+* [License](#license)
+* [Contact](#contact)
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+This project continues my previous script to collect access-session from switch with ISE in monitor mode:
+
+* [post](https://dmitrygolovach.com/python-and-ise-monitor-mode/)
+
+I decided to create a simple Web Application which allows gathering access-session information from the switch and to put into the specific Endpoint Group in ISE using Cisco ISE API.
+
+### Built With
 * Python3
-* ISE
-* Cisco IOS switch
+* Flask
+* Cisco ISE
+* Cisco IOS Switch
 
-## Setup
-* python check_access_sessions.py <IP_ADDRESS>
+<!-- GETTING STARTED -->
+## Getting Started
+```sh
+set FLASK_APP=application.py
+flask run
+```
 
+<!-- USAGE EXAMPLES -->
+## Usage
+
+
+<!-- BREAKDOWN -->
+## Breakdown
 * Breakdown post [here](https://dmitrygolovach.com/python-and-ise-monitor-mode/)
 * How it works [youtube](https://youtu.be/qrqU43QshUY)
 
-Example:
-* python check_access_sessions.py 10.10.10.10
-
+<!-- CONTACT -->
 ## Contact
 * Created by Dmitry Golovach
 * Web: [https://dagolovachgolovach.com](https://dmitrygolovach.com) 

@@ -21,8 +21,8 @@ def main():
 def check():
     ip_address = request.form.get("ip_address")
     dict_result = check_access_sessions.main(ip_address)
-    #return jsonify(dict_result)
     return render_template("check-result.html", dict_result=dict_result)
+
 
 @app.route("/mac/<mac>", methods=["GET", "POST"])
 def search_ise(mac):
