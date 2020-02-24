@@ -27,7 +27,7 @@ This Flask Web Application allows to do the following:
 ## About The Project
 This project continues my previous script to collect access-session from switch with ISE in monitor mode:
 
-* [post](https://dmitrygolovach.com/python-and-ise-monitor-mode/)
+* [Python and ISE monitor mode](https://dmitrygolovach.com/python-and-ise-monitor-mode/)
 
 I decided to create a simple Web Application which allows gathering access-session information from the switch and to put into the specific Endpoint Group in ISE using Cisco ISE API.
 
