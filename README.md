@@ -20,9 +20,7 @@ This Flask Web Application allows to do the following:
   * [Built With](#built-with)
 * [Getting Started](#getting-started)
 * [Usage](#usage)
-* [Roadmap](#roadmap)
-* [Contributing](#contributing)
-* [License](#license)
+* [Breakdown](#breakdown)
 * [Contact](#contact)
 
 <!-- ABOUT THE PROJECT -->
@@ -45,6 +43,8 @@ I decided to create a simple Web Application which allows gathering access-sessi
 set FLASK_APP=application.py
 flask run
 ```
+
+> change local.py file with switch and ISE API credentials
 
 <!-- USAGE EXAMPLES -->
 ## Usage
