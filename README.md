@@ -39,6 +39,8 @@ I decided to create a simple Web Application which allows gathering access-sessi
 
 <!-- GETTING STARTED -->
 ## Getting Started
+> to run flask application
+
 ```sh
 set FLASK_APP=application.py
 flask run
