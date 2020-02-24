@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css') }}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            text-align: center;
+        }
+    </style>
+
+    <title>Title</title>
+</head>
+
+<body>
+
+        <div class="container-fluid pt-3">
+            <div class="row pt-5">
+                <div class="col"></div>
+                <div class="col">
+                    <h3>Collect access-sessions information from the switch</h3>
+                </div>
+                <div class="col"></div>
+            </div>
+            <div class="row pt-5">
+                <div class="col"></div>
+                <div class="col">
+                    <h5>Please enter switch and ISE API credentials</h5>
+                    <p></p>
+                    <form action="{{  url_for('main') }}" method="post">
+                        <input name="switch_username" class="form-control" id="exampleFormControlTextarea5" rows="1" placeholder="Enter switch username" required>
+                        <p></p>
+                        <input name="switch_password" class="form-control" id="exampleFormControlTextarea5" rows="1" placeholder="Enter switch password" required>
+                        <p></p>
+                        <input name="ise_username" class="form-control" id="exampleFormControlTextarea5" rows="1" placeholder="Enter ISE username" required>
+                        <p></p>
+                        <input name="ise_password" class="form-control" id="exampleFormControlTextarea5" rows="1" placeholder="Enter ISE password" required>
+                        <p></p>
+                        <button class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                <div class="col"></div>
+            </div>
+            <div class="row pt-5">
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
+            </div>
+        </div>
+
+
+</body>
+</html>

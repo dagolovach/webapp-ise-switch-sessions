@@ -48,12 +48,18 @@ flask run
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-
+* collect sessions information from the switch
+    * enter switch IP address
+    * collect access-session information and show it in the table/json file
+    * provide option to update group in the ISE for this MAC address
+* work with just some MAC address
+    * enter MAC address
+    * update the group in ISE for provided MAC address
 
 <!-- BREAKDOWN -->
 ## Breakdown
-* Breakdown post [here](https://dmitrygolovach.com/python-and-ise-monitor-mode/)
-* How it works [youtube](https://youtu.be/qrqU43QshUY)
+* Breakdown post [here](https://dmitrygolovach.com/webapp-ise-python-flask/)
+* How it works [youtube](https://youtu.be/xbWCEKQG22c)
 
 <!-- CONTACT -->
 ## Contact
