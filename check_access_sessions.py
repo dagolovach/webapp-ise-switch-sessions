@@ -15,12 +15,10 @@ A simple script to collect information about access-session on the switch.
 """
 
 # Imports
-import time
 import re
 import paramiko
 import netmiko
 import pprint
-import sys
 import time
 from local import switch_credentials
 import requests
@@ -65,7 +63,7 @@ class Device:
         self.mac_addresses - all mac addresses of access-sessions (authentication sessions)
         """
         self.connection.send_command("term len 0")
-        active_sessions = self.connection.send_command("show authentication sessions")
+        active_sessions = self.connection.send_command("show access-session")
         self.session_count = re.findall('Session count = (\d+)\n', active_sessions)
         self.mac_addresses = re.findall(r'[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}', active_sessions)
 
@@ -90,7 +88,7 @@ class Device:
         """
         dict_result = {}
         for each in self.mac_addresses:
-            session_details = self.connection.send_command("show authentication sessions mac " + each)
+            session_details = self.connection.send_command("show access-session mac " + each + ' details')
             if 'FAIL' in session_details or 'Unauthorized' in session_details:
                 mac_address = re.findall(r'[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}', session_details)
                 ip_address = re.findall(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', session_details)
@@ -128,18 +126,15 @@ def main(current_ip_address):
     device.collect_active_sessions_details()
     dict_result = device.get_result()
     device.close_connection()
-    pprint.PrettyPrinter().pprint(dict_result)
     with open('static/result.json', 'w', newline='') as f:
         pprint.PrettyPrinter(stream=f).pprint(dict_result)
-    print(time.time() - start_time)
     return dict_result
 
 
 if __name__ == "__main__":
-    dict_result = {}
     #if len(sys.argv) == 2:
     #    main(sys.argv[1])
     #else:
     #    raise SyntaxError("Insufficient arguments.")
-    main('1.1.1.1')
+    main('10.13.1.5')
 
