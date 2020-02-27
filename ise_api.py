@@ -3,6 +3,7 @@ import response as response
 from requests.auth import HTTPBasicAuth
 from local import ise_credentials
 from typing import List, Set, Dict, Tuple, Optional
+import re
 
 # Disable warnings(InsecureRequestWarning) because of the certificate
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -49,7 +50,7 @@ def get_endpoint_group_id(mac: str) -> str:
     """
     url = base_url + "endpoint/name/" + mac
     payload = {}
-
+    print(url)
     response = requests.request("GET", url, auth=HTTPBasicAuth(user, password), headers=headers, data=payload,
                                 verify=False)
     data = response.json()
@@ -80,5 +81,10 @@ def update_endpoint_group(mac: str, ise_group_id: str):
     return response
 
 
-if __name__ == "__main__":
-    get_group_id()
+def mac_normalization(current_mac_address: str, symbol: str) -> str:
+    current_mac_address = re.sub(r'\W+', '', current_mac_address)
+    if len(current_mac_address) == 12:
+        return symbol.join([current_mac_address[i:i+4] for i in range(0, len(current_mac_address), 4)])
+    else:
+        return 'Error'
+

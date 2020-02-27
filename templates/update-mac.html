@@ -19,6 +19,9 @@
     <title>Title</title>
 </head>
 <body>
+
+{%if mac_check %}
+
         <div class="container-fluid pt-3">
 
                 <div class="row pt-5">
@@ -67,6 +70,33 @@
                 </dev>
                 <dev class="row"></dev>
         </div>
+
+{% else %}
+
+        <div class="container-fluid pt-3">
+
+                <div class="row pt-5">
+                    <div class="col"></div>
+                    <div class="col">
+                        <form action="{{  url_for('main') }}" method="post">
+                            <button class="btn btn-outline-primary">Main</button>
+                        </form>
+                    </div>
+                    <div class="col"></div>
+                </div>
+                <dev class="row"></dev>
+                <dev class="row">
+                    <dev class="col"></dev>
+                    <dev class="col pt-5">
+                        <h4> Format Error. <p></p> Please check MAC address format: <span>{{mac}}</span></h4>
+                    </dev>
+                    <dev class="col"></dev>
+
+                </dev>
+                <dev class="row"></dev>
+        </div>
+
+{% endif %}
 
 </body>
 </html>

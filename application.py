@@ -50,11 +50,16 @@ def update_ise(mac):
 
 @app.route("/endpoint", methods=["POST"])
 def search_endpoint():
+    mac_check = True
     mac = request.form.get("mac")
     endpoint_group_name = 'Unknown'
+    normalized_mac = ise_api.mac_normalization(mac, '.')
+    if normalized_mac == 'Error':
+        mac_check = False
+        return render_template("update-mac.html", mac_check=mac_check, mac=mac)
     ise_groups = ise_api.get_group_id()
     endpoint_group_id = ise_api.get_endpoint_group_id(mac)
     for group_id, group_name in ise_groups.items():  # for name, age in dictionary.iteritems():  (for Python 2.x)
         if group_id == endpoint_group_id:
             endpoint_group_name = group_name
-    return render_template("update-mac.html", mac=mac, endpoint_group_id=endpoint_group_name, ise_groups=ise_groups)
+    return render_template("update-mac.html", mac_check=mac_check, mac=mac, endpoint_group_id=endpoint_group_name, ise_groups=ise_groups)
