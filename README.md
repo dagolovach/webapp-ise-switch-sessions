@@ -45,7 +45,7 @@ I decided to create a simple Web Application which allows gathering access-sessi
 git clone https://github.com/dagolovach/webapp-ise-switch-sessions.git 
  ```
 
-### to run flask application
+### Run the flask application
 
 * Windows CMD:
 ```sh
@@ -66,7 +66,7 @@ git clone https://github.com/dagolovach/webapp-ise-switch-sessions.git
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 ```
 
-### change local.py file with switch and ISE API credentials:
+### Change local.py file with switch and ISE API credentials:
 ```sh
 switch_credentials = {
     'username': 'admin',
