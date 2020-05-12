@@ -45,7 +45,7 @@ I decided to create a simple Web Application which allows gathering access-sessi
 git clone https://github.com/dagolovach/webapp-ise-switch-sessions.git 
 ```
 
-### Clone the repository
+### Create a virtual enviroment
 ```sh
 % python3 -m venv vevn
 % . venv/bin/activate
