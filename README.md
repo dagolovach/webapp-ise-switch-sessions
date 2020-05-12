@@ -41,13 +41,13 @@ I decided to create a simple Web Application which allows gathering access-sessi
 ## Getting Started
 > to run flask application
 
-Windows CMD:
+* Windows CMD:
 ```sh
 % set FLASK_APP=application.py
 % flask run
 ```
 
-Unix Bash (Linux, Mac, etc.):
+* Unix Bash (Linux, Mac, etc.):
 ```sh
 % export FLASK_APP=application.py
 %
@@ -60,7 +60,7 @@ Unix Bash (Linux, Mac, etc.):
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 ```
 
-change local.py file with switch and ISE API credentials:
+* change local.py file with switch and ISE API credentials:
 ```sh
 switch_credentials = {
     'username': 'admin',
