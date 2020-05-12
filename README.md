@@ -39,6 +39,12 @@ I decided to create a simple Web Application which allows gathering access-sessi
 
 <!-- GETTING STARTED -->
 ## Getting Started
+
+### Clone the repository
+```sh
+git clone https://github.com/dagolovach/webapp-ise-switch-sessions.git 
+ ```
+
 ### to run flask application
 
 * Windows CMD:
