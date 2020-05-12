@@ -41,8 +41,15 @@ I decided to create a simple Web Application which allows gathering access-sessi
 ## Getting Started
 > to run flask application
 
+Windows CMD:
 ```sh
 set FLASK_APP=application.py
+flask run
+```
+
+Unix Bash (Linux, Mac, etc.):
+```sh
+export FLASK_APP=application.py
 flask run
 ```
 
