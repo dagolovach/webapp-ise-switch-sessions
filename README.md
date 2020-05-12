@@ -40,10 +40,20 @@ I decided to create a simple Web Application which allows gathering access-sessi
 <!-- GETTING STARTED -->
 ## Getting Started
 
+### Create a virtuanl enviroment
+```sh
+% export FLASK_APP=application.py
+```
+
+### Install modules from requirements.txt
+```sh
+% pip install -r requirements.txt
+```
+
 ### Clone the repository
 ```sh
 git clone https://github.com/dagolovach/webapp-ise-switch-sessions.git 
- ```
+```
 
 ### Run the flask application
 
