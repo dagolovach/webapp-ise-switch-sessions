@@ -39,7 +39,7 @@ I decided to create a simple Web Application which allows gathering access-sessi
 
 <!-- GETTING STARTED -->
 ## Getting Started
-> to run flask application
+### to run flask application
 
 * Windows CMD:
 ```sh
@@ -60,7 +60,7 @@ I decided to create a simple Web Application which allows gathering access-sessi
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 ```
 
-* change local.py file with switch and ISE API credentials:
+### change local.py file with switch and ISE API credentials:
 ```sh
 switch_credentials = {
     'username': 'admin',
