@@ -60,7 +60,20 @@ Unix Bash (Linux, Mac, etc.):
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 ```
 
-> change local.py file with switch and ISE API credentials
+change local.py file with switch and ISE API credentials:
+```sh
+switch_credentials = {
+    'username': 'admin',
+    'password': 'admin',
+    'secret': 'admin'
+}
+
+ise_credentials = {
+    'username': 'admin',
+    'password': 'admin',
+    'base_url': 'https://10.10.10.10:9060/ers/config/'
+}
+```
 
 <!-- USAGE EXAMPLES -->
 ## Usage
