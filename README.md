@@ -43,14 +43,21 @@ I decided to create a simple Web Application which allows gathering access-sessi
 
 Windows CMD:
 ```sh
-set FLASK_APP=application.py
-flask run
+% set FLASK_APP=application.py
+% flask run
 ```
 
 Unix Bash (Linux, Mac, etc.):
 ```sh
-export FLASK_APP=application.py
-flask run
+% export FLASK_APP=application.py
+%
+% flask run                    
+ * Serving Flask app "application.py"
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 ```
 
 > change local.py file with switch and ISE API credentials
