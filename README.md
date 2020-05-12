@@ -49,7 +49,7 @@ flask run
 
 Unix Bash (Linux, Mac, etc.):
 ```sh
-export FLASK_APP=hello
+export FLASK_APP=application.py
 flask run
 ```
 
