@@ -1,3 +1,5 @@
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/dagolovach/webapp-ise-switch-sessions)
+
 # WebApp to gather Access Sessions info and Set Endpoint Group in ISE
 
 This Flask Web Application allows to do the following:
