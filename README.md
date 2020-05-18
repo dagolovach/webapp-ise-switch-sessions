@@ -49,7 +49,7 @@ git clone https://github.com/dagolovach/webapp-ise-switch-sessions.git
 
 ### Create a virtual enviroment
 ```sh
-% python3 -m venv vevn
+% python3 -m venv venv
 % . venv/bin/activate
 ```
 
