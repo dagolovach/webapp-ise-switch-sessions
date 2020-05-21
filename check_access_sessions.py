@@ -63,9 +63,7 @@ class Device:
         """
         self.connection.send_command("term len 0")
         active_sessions = self.connection.send_command("show access-session")
-        self.session_count = re.findall(
-            "Session count = (\d+)\n", active_sessions
-        )
+        self.session_count = re.findall("Session count = (\d+)\n", active_sessions)
         self.mac_addresses = re.findall(
             r"[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}", active_sessions
         )

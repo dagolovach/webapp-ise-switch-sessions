@@ -1,10 +1,4 @@
-
-
-from flask import (
-    Flask,
-    render_template,
-    request
-)
+from flask import Flask, render_template, request
 from flask_session import Session
 import check_access_sessions
 import ise_api
