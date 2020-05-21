@@ -1,9 +1,8 @@
+import re
 import requests
-import response as response
 from requests.auth import HTTPBasicAuth
 from local import ise_credentials
-from typing import List, Set, Dict, Tuple, Optional
-import re
+
 
 # Disable warnings(InsecureRequestWarning) because of the certificate
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -11,12 +10,12 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 headers = {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
+    "Content-Type": "application/json",
+    "Accept": "application/json",
 }
-user = ise_credentials['username']
-password = ise_credentials['password']
-base_url = ise_credentials['base_url']
+user = ise_credentials["username"]
+password = ise_credentials["password"]
+base_url = ise_credentials["base_url"]
 
 
 def get_group_id() -> dict:
@@ -28,13 +27,19 @@ def get_group_id() -> dict:
     payload = {}
     ise_groups = {}
     while True:
-        response = requests.request("GET", url, auth=HTTPBasicAuth(user, password), headers=headers, data=payload,
-                                    verify=False)
+        response = requests.request(
+            "GET",
+            url,
+            auth=HTTPBasicAuth(user, password),
+            headers=headers,
+            data=payload,
+            verify=False,
+        )
         data = response.json()
-        for each in data['SearchResult']['resources']:
-            ise_groups[each['id']] = each['name']
-        if data['SearchResult']['nextPage']['href']:
-            url = data['SearchResult']['nextPage']['href']
+        for each in data["SearchResult"]["resources"]:
+            ise_groups[each["id"]] = each["name"]
+        if data["SearchResult"]["nextPage"]["href"]:
+            url = data["SearchResult"]["nextPage"]["href"]
             continue
         else:
             break
@@ -51,10 +56,16 @@ def get_endpoint_group_id(mac: str) -> str:
     url = base_url + "endpoint/name/" + mac
     payload = {}
     print(url)
-    response = requests.request("GET", url, auth=HTTPBasicAuth(user, password), headers=headers, data=payload,
-                                verify=False)
+    response = requests.request(
+        "GET",
+        url,
+        auth=HTTPBasicAuth(user, password),
+        headers=headers,
+        data=payload,
+        verify=False,
+    )
     data = response.json()
-    endpoint_group_id = data['ERSEndPoint']['groupId']
+    endpoint_group_id = data["ERSEndPoint"]["groupId"]
     return endpoint_group_id
 
 
@@ -67,24 +78,44 @@ def update_endpoint_group(mac: str, ise_group_id: str):
     """
     url = base_url + "endpoint/name/" + mac
     payload = {}
-    response = requests.request("GET", url, auth=HTTPBasicAuth(user, password), headers=headers, data=payload,
-                                verify=False)
+    response = requests.request(
+        "GET",
+        url,
+        auth=HTTPBasicAuth(user, password),
+        headers=headers,
+        data=payload,
+        verify=False,
+    )
     data = response.json()
-    endpoint_id = data['ERSEndPoint']['id']
+    endpoint_id = data["ERSEndPoint"]["id"]
 
     url = base_url + "endpoint/" + endpoint_id
-    payload = "{\r\n\t\"ERSEndPoint\": {\r\n\t\t\"groupId\": \"" + ise_group_id + "\",\r\n\t\t\"staticGroupAssignment" \
-                                                                                  "\": \"true\"\r\n        }\r\n} "
+    payload = (
+        '{\r\n\t"ERSEndPoint": {\r\n\t\t"groupId": "'
+        + ise_group_id
+        + '",\r\n\t\t"staticGroupAssignment'
+        '": "true"\r\n        }\r\n} '
+    )
 
-    response = requests.request("PUT", url, auth=HTTPBasicAuth(user, password), headers=headers, data=payload,
-                                verify=False)
+    response = requests.request(
+        "PUT",
+        url,
+        auth=HTTPBasicAuth(user, password),
+        headers=headers,
+        data=payload,
+        verify=False,
+    )
     return response
 
 
 def mac_normalization(current_mac_address: str, symbol: str) -> str:
-    current_mac_address = re.sub(r'\W+', '', current_mac_address)
+    current_mac_address = re.sub(r"\W+", "", current_mac_address)
     if len(current_mac_address) == 12:
-        return symbol.join([current_mac_address[i:i+4] for i in range(0, len(current_mac_address), 4)])
-    else:
-        return 'Error'
+        return symbol.join(
+            [
+                current_mac_address[i : i + 4]
+                for i in range(0, len(current_mac_address), 4)
+            ]
+        )
 
+    return "Error"

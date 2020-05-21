@@ -1,0 +1,12 @@
+---
+language: "python"
+python:
+  - "3.8"
+
+# Install python packages (Nornir, etc) and linters.
+install:
+  - "pip install -r requirements.txt"
+
+# Perform pre-checks
+before_script:
+  - "make lint"
