@@ -1,7 +1,3 @@
-# Author: Nick Russo
-# Purpose: Provide simple "make" targets for developers
-# See README for details about each target.
-
 # Default goal runs the "test" target
 .DEFAULT_GOAL := test
 
