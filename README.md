@@ -1,4 +1,4 @@
-[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/dagolovach/webapp-ise-switch-sessions)
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/dagolovach/webapp-ise-switch-sessions) [![Build Status](https://travis-ci.com/dagolovach/webapp-ise-switch-sessions.svg?branch=master)](https://travis-ci.com/dagolovach/webapp-ise-switch-sessions)
 
 # WebApp to gather Access Sessions info and Set Endpoint Group in ISE
 
