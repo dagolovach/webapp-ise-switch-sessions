@@ -49,6 +49,6 @@ stevedore==1.32.0
 textfsm==1.1.0
 toml==0.10.0
 typed-ast==1.4.1
-urllib3==1.25.9
+urllib3==1.26.5
 Werkzeug==0.16.0
 wrapt==1.12.1
