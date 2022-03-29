@@ -27,7 +27,7 @@ matplotlib==3.2.1
 mccabe==0.6.1
 netmiko==3.1.0
 numpy==1.18.4
-paramiko==2.7.1
+paramiko==2.10.1
 pathspec==0.8.0
 pbr==5.4.5
 pycodestyle==2.6.0
